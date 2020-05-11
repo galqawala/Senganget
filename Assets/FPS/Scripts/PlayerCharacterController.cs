@@ -119,6 +119,7 @@ public class PlayerCharacterController : MonoBehaviour
     const float k_GroundCheckDistanceInAir = 0.07f;
     SaveLoad saveLoad = new SaveLoad();
     float secondsSinceSave = 0;
+    bool isLoaded = false;
 
     void Start()
     {
@@ -146,7 +147,16 @@ public class PlayerCharacterController : MonoBehaviour
         // force the crouch state to false when starting
         SetCrouchingState(false, true);
         UpdateCharacterHeight(true);
-        saveLoad.Load(); //Load once the health system is up and running
+    }
+
+    void FixedUpdate() {
+        //Player's position can only be changed in FixedUpdate()
+        Debug.Log("m_Health.currentHealth = "+m_Health.currentHealth);
+        if (!isLoaded && m_Health.currentHealth>0) {
+            //Health has been initialized --> load
+            saveLoad.Load();
+            isLoaded = true;
+        }
     }
 
     void Update()

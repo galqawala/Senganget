@@ -48,8 +48,6 @@
      <Compile Include="Assets\FPS\Scripts\Editor\MiniProfiler.cs" />
      <Compile Include="Assets\FPS\Scripts\Editor\PrefabReplacerEditor.cs" />
      <Compile Include="Assets\FPS\Scripts\Editor\ShaderBuildStripping.cs" />
-     <Compile Include="Assets\LevelGenerator\Scripts\Editor\LevelEditor.cs" />
-     <Compile Include="Assets\MapGenerator\Editor\AN_CustomInspector.cs" />
      <Compile Include="Assets\MapMagic\Compatibility\Editor\CTSEditor.cs" />
      <Compile Include="Assets\MapMagic\Compatibility\Editor\MegaSplatEditor.cs" />
      <Compile Include="Assets\MapMagic\Compatibility\Editor\MicroSplatEditor.cs" />
