@@ -1,0 +1,4 @@
+Library/*_cache/**
+Library/*Cache/**
+Library/Artifacts/**
+.vscode/**
