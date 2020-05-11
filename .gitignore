@@ -1,4 +1,7 @@
 Library/*_cache/**
 Library/*Cache/**
 Library/Artifacts/**
+Library/EditorInstance.json
+Temp/**
+Logs/**
 .vscode/**
