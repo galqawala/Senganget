@@ -8,8 +8,8 @@ public class Enemies : MonoBehaviour
     public GameObject[] enemyList;
     public NavMeshSurface navMesh;
     public GameObject mapMagicContainer;
+    public GameObject[] loot;
 
-    // private int framesSinceNavMeshUpdate = int.MaxValue/2;
     void Update()
     {
         //Tag the terrain to be used as a navmesh source
@@ -27,14 +27,17 @@ public class Enemies : MonoBehaviour
             //The size (diameter) of LocalNavMeshBuilder has to be at least twice the spawnDistanceMax (radius) in each dimension
             float spawnDistanceMin = 40;
             float spawnDistanceMax = spawnDistanceMin*2;
-            int enemyIndex = Random.Range(0, enemyList.Length);
-            var enemyToSpawn = enemyList[enemyIndex];
+            var enemyToSpawn = enemyList[Random.Range(0, enemyList.Length)];
             var playerPos = Camera.main.transform.position;
             var spawnPos = GetRandomPoint(playerPos, spawnDistanceMax);
             var spawnDistance = (spawnPos-playerPos).magnitude;
             
             if (spawnDistance>spawnDistanceMin && spawnDistance<Mathf.Infinity) {
-                Instantiate(enemyToSpawn, spawnPos, Quaternion.identity, transform);
+                var enemy = Instantiate(enemyToSpawn, spawnPos, Quaternion.identity, transform);
+                var enemyController = (EnemyController) enemy.GetComponentsInChildren(typeof(EnemyController))[0];
+                var randomLoot = loot[Random.Range(0, loot.Length)];
+                enemyController.lootPrefab = randomLoot;
+                enemyController.dropRate = 0.5f;
             }
         }
     }

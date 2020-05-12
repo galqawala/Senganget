@@ -151,7 +151,6 @@ public class PlayerCharacterController : MonoBehaviour
 
     void FixedUpdate() {
         //Player's position can only be changed in FixedUpdate()
-        Debug.Log("m_Health.currentHealth = "+m_Health.currentHealth);
         if (!isLoaded && m_Health.currentHealth>0) {
             //Health has been initialized --> load
             saveLoad.Load();
