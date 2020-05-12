@@ -4,6 +4,7 @@ Library/*.log
 Library/*Cache*
 Library/*Cache/**
 Library/Artifacts/**
+Library/gfu/cache/**
 Library/EditorInstance.json
 Logs/**
 Temp/**

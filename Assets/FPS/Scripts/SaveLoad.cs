@@ -1,7 +1,9 @@
 ﻿using System.IO;
 using UnityEngine;
  
-public class SaveLoad {             
+public class SaveLoad {
+    //If something big has been achieved: https://docs.unity3d.com/ScriptReference/PlayerPrefs.Save.html
+
     public void Save() {
         GameObject player = GameObject.Find("Player");
 

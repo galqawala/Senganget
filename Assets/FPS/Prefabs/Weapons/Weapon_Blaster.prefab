@@ -198,11 +198,14 @@ MonoBehaviour:
   ammoReloadRate: 16
   ammoReloadDelay: 1
   maxAmmo: 16
+  automaticReleaseOnCharged: 0
   maxChargeDuration: 2
   ammoUsedOnStartCharge: 1
   ammoUsageRateWhileCharging: 2
+  weaponAnimator: {fileID: 0}
   muzzleFlashPrefab: {fileID: 748781637555137343, guid: 9f671b22f25370048a18fb1f821294ec,
     type: 3}
+  unparentMuzzleFlash: 0
   shootSFX: {fileID: 8300000, guid: 53d2238f4c4b2aa4f8e559c7af9e0126, type: 3}
   changeWeaponSFX: {fileID: 8300000, guid: 7b83d61917ac1224f942a0609b1221f2, type: 3}
 --- !u!114 &8745372878802205896
@@ -547,6 +550,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -559,6 +563,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -625,6 +630,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -636,6 +642,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -703,6 +710,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -715,6 +723,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -782,6 +791,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -794,6 +804,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -860,6 +871,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -871,6 +883,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -938,6 +951,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -950,6 +964,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1054,6 +1069,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1065,6 +1081,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1354,16 +1371,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6867164318176036221}
     m_Modifications:
-    - target: {fileID: 5449920494797286051, guid: 21c8bd050f24da54285f8a3987ee6253,
-        type: 3}
-      propertyPath: m_Name
-      value: VFX_OverheatPrimary
-      objectReference: {fileID: 0}
-    - target: {fileID: 5449920494797286051, guid: 21c8bd050f24da54285f8a3987ee6253,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5338991494728519494, guid: 21c8bd050f24da54285f8a3987ee6253,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1419,17 +1426,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5449920494797286051, guid: 21c8bd050f24da54285f8a3987ee6253,
+        type: 3}
+      propertyPath: m_Name
+      value: VFX_OverheatPrimary
+      objectReference: {fileID: 0}
+    - target: {fileID: 5449920494797286051, guid: 21c8bd050f24da54285f8a3987ee6253,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}
---- !u!4 &2772967909889388702 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5338991494728519494, guid: 21c8bd050f24da54285f8a3987ee6253,
-    type: 3}
-  m_PrefabInstance: {fileID: 7812733688514592728}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &1818117475793052272 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 8455270613747015080, guid: 21c8bd050f24da54285f8a3987ee6253,
+    type: 3}
+  m_PrefabInstance: {fileID: 7812733688514592728}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2772967909889388702 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5338991494728519494, guid: 21c8bd050f24da54285f8a3987ee6253,
     type: 3}
   m_PrefabInstance: {fileID: 7812733688514592728}
   m_PrefabAsset: {fileID: 0}
