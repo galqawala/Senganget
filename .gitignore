@@ -1,10 +1,4 @@
 .vscode/**
-Library/*_cache/**
-Library/*.log
-Library/*Cache*
-Library/*Cache/**
-Library/Artifacts/**
-Library/gfu/cache/**
-Library/EditorInstance.json
+Library/**
 Logs/**
 Temp/**
