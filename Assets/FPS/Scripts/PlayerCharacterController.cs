@@ -121,6 +121,8 @@ public class PlayerCharacterController : MonoBehaviour
     float secondsSinceSave = 0;
     bool isLoaded = false;
     PlayerCharacterController m_Player;
+    int weaponIndex;
+
 
 
     void Start()
@@ -217,7 +219,7 @@ public class PlayerCharacterController : MonoBehaviour
     void OnDie()
     {
         isDead = true;
-
+        weaponIndex = m_WeaponsManager.activeWeaponIndex;
         // Tell the weapons manager to switch to a non-existing weapon in order to lower the weapon
         m_WeaponsManager.SwitchToWeaponIndex(-1, true);
     }
@@ -225,8 +227,8 @@ public class PlayerCharacterController : MonoBehaviour
     {
         isDead = false;
 
-        // Pick up the gun and try not to die again
-        m_WeaponsManager.SwitchToWeaponIndex(0, true);
+        // Pick up the gun again and keep going!
+        m_WeaponsManager.SwitchToWeaponIndex(weaponIndex, true);
     }
 
     void GroundCheck()
