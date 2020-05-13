@@ -34,6 +34,7 @@ public class GameFlowManager : MonoBehaviour
     ObjectiveManager m_ObjectiveManager;
     float m_TimeLoadEndGameScene;
     string m_SceneToLoad;
+    bool disableInvincibilityAfterBsod = false;
 
     void Start()
     {
@@ -61,6 +62,8 @@ public class GameFlowManager : MonoBehaviour
             {
                 Health playerHealth = m_Player.GetComponent<Health>();
                 playerHealth.Resurrect();
+                playerHealth.invincible = true;
+                disableInvincibilityAfterBsod = true;
                 gameIsEnding = false;
                 m_TimeLoadEndGameScene = Time.time + endSceneLoadDelay; //when should the fade in complete
             }
@@ -69,6 +72,10 @@ public class GameFlowManager : MonoBehaviour
             endGameFadeCanvasGroup.alpha = timeRatio; //1 = BSOD
 
             AudioUtility.SetMasterVolume(1 - timeRatio);
+        } else if (disableInvincibilityAfterBsod) {
+            Health playerHealth = m_Player.GetComponent<Health>();
+            playerHealth.invincible = false;
+            disableInvincibilityAfterBsod = false;
         }
         else
         {
