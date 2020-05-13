@@ -156,6 +156,11 @@ public class PlayerCharacterController : MonoBehaviour
         UpdateCharacterHeight(true);
     }
 
+    void OnApplicationQuit()
+    {
+        saveLoad.Save();
+    }
+
     void FixedUpdate() {
         //Player's position can only be changed in FixedUpdate()
         if (!isLoaded && m_Health.currentHealth>0) {
