@@ -39,15 +39,18 @@ public class InGameMenuManager : MonoBehaviour
 
         lookSensitivitySlider.value = m_PlayerInputsHandler.lookSensitivity;
         lookSensitivitySlider.onValueChanged.AddListener(OnMouseSensitivityChanged);
+        lookSensitivitySlider.value = PlayerPrefs.GetFloat("lookSensitivity");
 
         shadowsToggle.isOn = QualitySettings.shadows != ShadowQuality.Disable;
         shadowsToggle.onValueChanged.AddListener(OnShadowsChanged);
+        shadowsToggle.isOn = PlayerPrefs.GetInt("shadows")>0;
 
         invincibilityToggle.isOn = m_PlayerHealth.invincible;
         invincibilityToggle.onValueChanged.AddListener(OnInvincibilityChanged);
 
         framerateToggle.isOn = m_FramerateCounter.uiText.gameObject.activeSelf;
         framerateToggle.onValueChanged.AddListener(OnFramerateCounterChanged);
+        framerateToggle.isOn = PlayerPrefs.GetInt("m_FramerateCounter")>0;
     }
 
     private void Update()
@@ -118,11 +121,13 @@ public class InGameMenuManager : MonoBehaviour
     void OnMouseSensitivityChanged(float newValue)
     {
         m_PlayerInputsHandler.lookSensitivity = newValue;
+        PlayerPrefs.SetFloat("lookSensitivity", newValue);
     }
 
     void OnShadowsChanged(bool newValue)
     {
         QualitySettings.shadows = newValue ? ShadowQuality.All : ShadowQuality.Disable;
+        PlayerPrefs.SetInt("shadows", (newValue ? 1 : 0));
     }
 
     void OnInvincibilityChanged(bool newValue)
@@ -133,6 +138,7 @@ public class InGameMenuManager : MonoBehaviour
     void OnFramerateCounterChanged(bool newValue)
     {
         m_FramerateCounter.uiText.gameObject.SetActive(newValue);
+        PlayerPrefs.SetInt("m_FramerateCounter", (newValue ? 1 : 0));
     }
 
     public void OnShowControlButtonClicked(bool show)
