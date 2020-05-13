@@ -120,6 +120,8 @@ public class PlayerCharacterController : MonoBehaviour
     SaveLoad saveLoad = new SaveLoad();
     float secondsSinceSave = 0;
     bool isLoaded = false;
+    PlayerCharacterController m_Player;
+
 
     void Start()
     {
@@ -139,6 +141,9 @@ public class PlayerCharacterController : MonoBehaviour
         m_Actor = GetComponent<Actor>();
         DebugUtility.HandleErrorIfNullGetComponent<Actor, PlayerCharacterController>(m_Actor, this, gameObject);
 
+        m_Player = FindObjectOfType<PlayerCharacterController>();
+        DebugUtility.HandleErrorIfNullFindObject<PlayerCharacterController, GameFlowManager>(m_Player, this);
+
         m_Controller.enableOverlapRecovery = true;
 
         m_Health.onDie += OnDie;
@@ -155,17 +160,17 @@ public class PlayerCharacterController : MonoBehaviour
             //Health has been initialized --> load
             saveLoad.Load();
             isLoaded = true;
+        } else if (transform.position.y < killHeight) {
+            //Player has fallen through the terrain, which shouldn't happen --> reposition them on closest surface
+            UnityEngine.AI.NavMeshHit hit;
+            UnityEngine.AI.NavMesh.SamplePosition(
+                m_Player.transform.position, out hit, Mathf.Infinity, UnityEngine.AI.NavMesh.AllAreas);
+            m_Player.transform.position = hit.position;
         }
     }
 
     void Update()
     {
-        // check for Y kill
-        if(!isDead && transform.position.y < killHeight)
-        {
-            m_Health.Kill();
-        }
-
         hasJumpedThisFrame = false;
 
         bool wasGrounded = isGrounded;

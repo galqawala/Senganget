@@ -59,10 +59,6 @@ public class GameFlowManager : MonoBehaviour
             // See if it's time to respawn
             if (Time.time >= m_TimeLoadEndGameScene)
             {
-                UnityEngine.AI.NavMeshHit hit;
-                UnityEngine.AI.NavMesh.SamplePosition(
-                    m_Player.transform.position, out hit, Mathf.Infinity, UnityEngine.AI.NavMesh.AllAreas);
-                m_Player.transform.position = hit.position;
                 Health playerHealth = m_Player.GetComponent<Health>();
                 playerHealth.Resurrect();
                 gameIsEnding = false;
