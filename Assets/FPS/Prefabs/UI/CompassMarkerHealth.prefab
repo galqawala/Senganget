@@ -63,7 +63,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f960e1e0f9c28f346bcff536efd27f78, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 42026ddb8af9ab4469471032859446cb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainImage: {fileID: 27218239305159426}
   canvasGroup: {fileID: 5727903887428834470}
-  defaultColor: {r: 0, g: 0.6666665, b: 1, a: 1}
+  defaultColor: {r: 0.2980392, g: 0.53202623, b: 1, a: 1}
   altColor: {r: 0, g: 0.53333324, b: 0.8, a: 1}
   isDirection: 0
   textContent: {fileID: 0}
