@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Assertions;
 
 public class Enemies : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Enemies : MonoBehaviour
     public NavMeshSurface navMesh;
     public GameObject mapMagicContainer;
     public GameObject[] loot;
+    public GameObject[] healthDrops;
 
     void Update()
     {
@@ -23,7 +25,7 @@ public class Enemies : MonoBehaviour
             }
         }
 
-        if (transform.childCount < 20) {
+        if (transform.childCount < 20 && Random.value < 0.1) {
             //The size (diameter) of LocalNavMeshBuilder has to be at least twice the spawnDistanceMax (radius) in each dimension
             float spawnDistanceMin = 40;
             float spawnDistanceMax = spawnDistanceMin*2;
@@ -35,9 +37,21 @@ public class Enemies : MonoBehaviour
             if (spawnDistance>spawnDistanceMin && spawnDistance<Mathf.Infinity) {
                 var enemy = Instantiate(enemyToSpawn, spawnPos, Quaternion.identity, transform);
                 var enemyController = (EnemyController) enemy.GetComponentsInChildren(typeof(EnemyController))[0];
-                var randomLoot = loot[Random.Range(0, loot.Length)];
-                enemyController.lootPrefab = randomLoot;
-                enemyController.dropRate = 0.5f;
+                var rnd = Random.value;
+
+                if (rnd < 0.15) { //15% health
+                    Debug.Log("drops health");
+                    enemyController.lootPrefab = healthDrops[Random.Range(0, healthDrops.Length)];
+                } else if (rnd < 0.3) { //15% weapons
+                    Debug.Log("drops loot");
+                    enemyController.lootPrefab = loot[Random.Range(0, loot.Length)];
+                } else { //70% nothing
+                    Debug.Log("drops nothing");
+                    enemyController.lootPrefab = null;
+                }
+                
+                enemyController.dropRate = enemyController.lootPrefab ? 1 : 0;
+                Debug.Log("enemyController.dropRate = "+enemyController.dropRate);
             }
         }
     }
