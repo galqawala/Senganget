@@ -32,7 +32,7 @@ public class GameFlowManager : MonoBehaviour
     PlayerCharacterController m_Player;
     NotificationHUDManager m_NotificationHUDManager;
     ObjectiveManager m_ObjectiveManager;
-    float m_TimeLoadEndGameScene;
+    float m_TimeEndBsod;
     string m_SceneToLoad;
     bool disableInvincibilityAfterBsod = false;
 
@@ -52,49 +52,38 @@ public class GameFlowManager : MonoBehaviour
     {
         if (gameIsEnding)
         {
-            float timeRatio = 1 - (m_TimeLoadEndGameScene - Time.time) / endSceneLoadDelay;
+            float timeRatio = 1 - (m_TimeEndBsod - Time.time) / endSceneLoadDelay;
             endGameFadeCanvasGroup.alpha = timeRatio;
-
             AudioUtility.SetMasterVolume(1 - timeRatio);
 
             // See if it's time to respawn
-            if (Time.time >= m_TimeLoadEndGameScene)
+            if (Time.time >= m_TimeEndBsod)
             {
                 Health playerHealth = m_Player.GetComponent<Health>();
                 playerHealth.Resurrect();
                 playerHealth.invincible = true;
                 disableInvincibilityAfterBsod = true;
                 gameIsEnding = false;
-                m_TimeLoadEndGameScene = Time.time + endSceneLoadDelay; //when should the fade in complete
+                m_TimeEndBsod = Time.time + endSceneLoadDelay; //when should the fade in complete
             }
         } else if (endGameFadeCanvasGroup.alpha > 0) { //BSOD is active
-            float timeRatio = (m_TimeLoadEndGameScene - Time.time) / endSceneLoadDelay;
+            float timeRatio = (m_TimeEndBsod - Time.time) / endSceneLoadDelay;
             endGameFadeCanvasGroup.alpha = timeRatio; //1 = BSOD
-
             AudioUtility.SetMasterVolume(1 - timeRatio);
         } else if (disableInvincibilityAfterBsod) {
             Health playerHealth = m_Player.GetComponent<Health>();
             playerHealth.invincible = false;
             disableInvincibilityAfterBsod = false;
+            endGameFadeCanvasGroup.gameObject.SetActive(false);
         }
         else
         {
             // Test if player died
             if (m_Player.isDead) {
-                EndGame(false);
+                gameIsEnding = true;
+                endGameFadeCanvasGroup.gameObject.SetActive(true);
+                m_TimeEndBsod = Time.time + endSceneLoadDelay; //when should the fade out complete
             }
         }
-    }
-
-    void EndGame(bool win)
-    {
-        // unlocks the cursor before leaving the scene, to be able to click buttons
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-        // Remember that we need to load the appropriate end scene after a delay
-        gameIsEnding = true;
-        endGameFadeCanvasGroup.gameObject.SetActive(true);
-        m_TimeLoadEndGameScene = Time.time + endSceneLoadDelay; //when should the fade out complete
     }
 }
