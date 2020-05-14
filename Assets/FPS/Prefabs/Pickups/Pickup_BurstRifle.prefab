@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5391986374566301944}
   - component: {fileID: 5391986374566301941}
   - component: {fileID: 5391986374566301940}
+  - component: {fileID: 4413071080436303930}
   m_Layer: 0
   m_Name: Pickup_BurstRifle
   m_TagString: Untagged
@@ -95,6 +96,83 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 5978089761014622744, guid: 424c4dd4da8e88c04a3422b9bb0db703,
     type: 3}
+--- !u!114 &4413071080436303930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5391986374566301945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b7698ec50c85c44a849a968dc1d57d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  compassMarkerPrefab: {fileID: 4125838790012652590, guid: 87ce3dee8ea5b6dc79d3c7447e19b411,
+    type: 3}
+  textDirection: 
+--- !u!1 &6546923916990955624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 156841762728761956}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4574454475140395002}
+  m_Layer: 0
+  m_Name: Missing Prefab (Dummy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4574454475140395002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 4419874958123251102, guid: 424c4dd4da8e88c04a3422b9bb0db703,
+    type: 3}
+  m_PrefabInstance: {fileID: 156841762728761956}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6546923916990955624}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: -2245570830672913358}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6766358520205810643
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 156841762728761956}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: -2245570830672913358}
+  m_Layer: 0
+  m_Name: Weapon_BurstRifle (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &-2245570830672913358
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 156841762728761956}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6766358520205810643}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4574454475140395002}
+  m_Father: {fileID: 167235208980905173}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7696458092355651969
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +200,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4574454475140395002}
+  - {fileID: -2245570830672913358}
   m_Father: {fileID: 5391986374566301942}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -195,9 +273,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 424c4dd4da8e88c04a3422b9bb0db703, type: 3}
---- !u!4 &4574454475140395002 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4419874958123251102, guid: 424c4dd4da8e88c04a3422b9bb0db703,
-    type: 3}
-  m_PrefabInstance: {fileID: 156841762728761956}
-  m_PrefabAsset: {fileID: 0}

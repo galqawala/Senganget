@@ -38,6 +38,8 @@ public class CompassMarker : MonoBehaviour
                 m_EnemyController.onLostTarget += LostTarget;
 
                 LostTarget();
+            } else {
+                mainImage.color = defaultColor;        
             }
         }
     }

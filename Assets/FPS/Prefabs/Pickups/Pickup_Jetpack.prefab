@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8200220640316782927}
   - component: {fileID: 8200220640316782920}
   - component: {fileID: 3637301713060460815}
+  - component: {fileID: -7137888466409952320}
   m_Layer: 0
   m_Name: Pickup_Jetpack
   m_TagString: Untagged
@@ -93,6 +94,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd5fd1bc5d131a34791bbd68d41d568f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-7137888466409952320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8200220640316782922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b7698ec50c85c44a849a968dc1d57d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  compassMarkerPrefab: {fileID: 4125838790012652590, guid: 87ce3dee8ea5b6dc79d3c7447e19b411,
+    type: 3}
+  textDirection: 
 --- !u!1001 &2402080302446488005
 PrefabInstance:
   m_ObjectHideFlags: 0
