@@ -78,6 +78,7 @@ public class PlayerWeaponsManager : MonoBehaviour
     float m_TimeStartedWeaponSwitch;
     WeaponSwitchState m_WeaponSwitchState;
     int m_WeaponSwitchNewWeaponIndex;
+    bool isLoaded = false;
 
     private void Start()
     {
@@ -93,17 +94,37 @@ public class PlayerWeaponsManager : MonoBehaviour
         SetFOV(defaultFOV);
 
         onSwitchedToWeapon += OnWeaponSwitched;
-
-        // Add starting weapons
-        foreach (var weapon in startingWeapons)
-        {
-            AddWeapon(weapon);
-        }
-        SwitchWeapon(true);
     }
 
     private void Update()
     {
+        //Load stuff on first frame instead of Start() to ensure required components have been initialized
+        //Player's position can only be changed in FixedUpdate()
+        if (!isLoaded) {
+            Debug.Log("Loading weapons now");
+
+            // Add starting weapons
+            foreach (var weapon in startingWeapons)
+            {
+                AddWeapon(weapon);
+            }
+
+            // Load weapons once HUD is ready
+            for (int i = 0; i < m_WeaponSlots.Length; i++)
+            {
+                var weaponPrefabName = PlayerPrefs.GetString("m_WeaponSlots["+i+"]");
+                GameObject weaponPrefab = (GameObject) Resources.Load(weaponPrefabName);
+                if (weaponPrefab) {
+                    WeaponController weaponController = 
+                        (WeaponController) weaponPrefab.GetComponentsInChildren(typeof(WeaponController))[0];
+                    AddWeapon(weaponController);
+                }
+            }
+            SwitchToWeaponIndex(PlayerPrefs.GetInt("activeWeaponIndex"));
+
+            isLoaded = true;
+        }
+
         // shoot handling
         WeaponController activeWeapon = GetActiveWeapon();
 
@@ -222,6 +243,7 @@ public class PlayerWeaponsManager : MonoBehaviour
                 m_WeaponMainLocalPosition = downWeaponPosition.localPosition;
                 m_WeaponSwitchState = WeaponSwitchState.PutUpNew;
                 activeWeaponIndex = m_WeaponSwitchNewWeaponIndex;
+                PlayerPrefs.SetInt("activeWeaponIndex",activeWeaponIndex);
 
                 WeaponController newWeapon = GetWeaponAtSlotIndex(m_WeaponSwitchNewWeaponIndex);
                 if (onSwitchedToWeapon != null)
@@ -342,6 +364,7 @@ public class PlayerWeaponsManager : MonoBehaviour
                 }
 
                 activeWeaponIndex = m_WeaponSwitchNewWeaponIndex;
+                PlayerPrefs.SetInt("activeWeaponIndex",activeWeaponIndex);
                 switchingTimeFactor = 0f;
 
                 // Activate new weapon
@@ -417,6 +440,8 @@ public class PlayerWeaponsManager : MonoBehaviour
                 {
                     onAddedWeapon.Invoke(weaponInstance, i);
                 }
+
+                PlayerPrefs.SetString("m_WeaponSlots["+i+"]", weaponPrefab.gameObject.name);
 
                 return true;
             }

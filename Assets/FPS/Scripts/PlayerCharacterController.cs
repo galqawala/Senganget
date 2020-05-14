@@ -162,12 +162,14 @@ public class PlayerCharacterController : MonoBehaviour
     }
 
     void FixedUpdate() {
+        //Load stuff on first frame instead of Start() to ensure required components have been initialized
         //Player's position can only be changed in FixedUpdate()
-        if (!isLoaded && m_Health.currentHealth>0) {
-            //Health has been initialized --> load
+        if (!isLoaded) {
+            Debug.Log("Loading now");
             saveLoad.Load();
             isLoaded = true;
         } else if (transform.position.y < killHeight) {
+            Debug.Log("Returning player to surface");
             //Player has fallen through the terrain, which shouldn't happen --> reposition them on closest surface
             UnityEngine.AI.NavMeshHit hit;
             UnityEngine.AI.NavMesh.SamplePosition(
