@@ -357,11 +357,25 @@ public class EnemyController : MonoBehaviour
         // tells the game flow manager to handle the enemy destuction
         m_EnemyManager.UnregisterEnemy(this);
 
-        // loot an object
-        if (TryDropItem())
-        {
-            Instantiate(lootPrefab, transform.position, Quaternion.identity);
-        }
+        // drop unique loot with unpacked&modded prefabs
+        var rnd = Random.value;
+        if (rnd < 0.15) { //15% health
+            Debug.Log("Dropping health");
+            var pickupObject = Resources.Load("Loot_Health");
+            Instantiate(pickupObject, transform.position, Quaternion.identity);
+        } else if (rnd < 0.3) { //15% weapons
+            Debug.Log("Dropping a weapon");
+            var pickupObject = Resources.Load("Pickup_Weapon"); //generic pickup object
+            var pickupInstance = (GameObject) Instantiate(pickupObject, transform.position, Quaternion.identity);
+            var pickupMesh = pickupInstance.transform.Find("Mesh");
+            var weaponNames = new string[] { "Weapon_Blaster","Weapon_Launcher","Weapon_Shotgun" };
+            var weaponObject = (GameObject) Resources.Load( weaponNames[Random.Range(0, weaponNames.Length)] );
+            var weaponInstance = Instantiate(weaponObject, transform.position, Quaternion.identity, pickupMesh);
+            WeaponController weaponController = weaponInstance.GetComponentInChildren(typeof(WeaponController)) as WeaponController;
+            // weaponController.weaponName += "2"; //You can only pickup weapons you don't have based on this name
+            WeaponPickup weaponPickupComponent = pickupInstance.AddComponent(typeof(WeaponPickup)) as WeaponPickup;
+            weaponPickupComponent.weaponPrefab = weaponController;
+        }   //70% nothing
 
         // this will call the OnDestroy function
         Destroy(gameObject, deathDuration);

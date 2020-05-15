@@ -246,6 +246,7 @@ public class PlayerWeaponsManager : MonoBehaviour
                 PlayerPrefs.SetInt("activeWeaponIndex",activeWeaponIndex);
 
                 WeaponController newWeapon = GetWeaponAtSlotIndex(m_WeaponSwitchNewWeaponIndex);
+                Debug.Log("Switched to weapon: "+newWeapon.weaponName);
                 if (onSwitchedToWeapon != null)
                 {
                     onSwitchedToWeapon.Invoke(newWeapon);
@@ -264,8 +265,10 @@ public class PlayerWeaponsManager : MonoBehaviour
         // Checks if we already have a weapon coming from the specified prefab
         foreach(var w in m_WeaponSlots)
         {
-            if(w != null && w.sourcePrefab == weaponPrefab.gameObject)
+            //compare weapon name instead of prefab (we'll have modded versions for each prefab)
+            if(w != null && w.weaponName == weaponPrefab.weaponName)
             {
+                Debug.Log("We have '"+weaponPrefab.weaponName+"' already");
                 return true;
             }
         }
@@ -369,6 +372,7 @@ public class PlayerWeaponsManager : MonoBehaviour
 
                 // Activate new weapon
                 WeaponController newWeapon = GetWeaponAtSlotIndex(activeWeaponIndex);
+                Debug.Log("Switched to weapon: "+newWeapon.weaponName);
                 if (onSwitchedToWeapon != null)
                 {
                     onSwitchedToWeapon.Invoke(newWeapon);
@@ -405,6 +409,8 @@ public class PlayerWeaponsManager : MonoBehaviour
     // Adds a weapon to our inventory
     public bool AddWeapon(WeaponController weaponPrefab)
     {
+        Debug.Log("Trying to add weapon "+weaponPrefab.weaponName);
+
         // if we already hold this weapon type (a weapon coming from the same source prefab), don't add the weapon
         if(HasWeapon(weaponPrefab))
         {

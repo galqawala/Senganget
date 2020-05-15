@@ -13,11 +13,11 @@ public class CompassElement : MonoBehaviour
     {
         m_Compass = FindObjectOfType<Compass>();
         DebugUtility.HandleErrorIfNullFindObject<Compass, CompassElement>(m_Compass, this);
-
-        var markerInstance = Instantiate(compassMarkerPrefab);
-
-        markerInstance.Initialize(this, textDirection);
-        m_Compass.RegisterCompassElement(transform, markerInstance);
+        if (compassMarkerPrefab) {
+            var markerInstance = Instantiate(compassMarkerPrefab);
+            markerInstance.Initialize(this, textDirection);
+            m_Compass.RegisterCompassElement(transform, markerInstance);
+        }
     }
 
     void OnDestroy()

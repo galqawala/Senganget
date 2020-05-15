@@ -35,23 +35,7 @@ public class Enemies : MonoBehaviour
             var spawnDistance = (spawnPos-playerPos).magnitude;
             
             if (spawnDistance>spawnDistanceMin && spawnDistance<Mathf.Infinity) {
-                var enemy = Instantiate(enemyToSpawn, spawnPos, Quaternion.identity, transform);
-                var enemyController = (EnemyController) enemy.GetComponentsInChildren(typeof(EnemyController))[0];
-                var rnd = Random.value;
-
-                if (rnd < 0.15) { //15% health
-                    Debug.Log("drops health");
-                    enemyController.lootPrefab = healthDrops[Random.Range(0, healthDrops.Length)];
-                } else if (rnd < 0.3) { //15% weapons
-                    Debug.Log("drops loot");
-                    enemyController.lootPrefab = loot[Random.Range(0, loot.Length)];
-                } else { //70% nothing
-                    Debug.Log("drops nothing");
-                    enemyController.lootPrefab = null;
-                }
-                
-                enemyController.dropRate = enemyController.lootPrefab ? 1 : 0;
-                Debug.Log("enemyController.dropRate = "+enemyController.dropRate);
+                Instantiate(enemyToSpawn, spawnPos, Quaternion.identity, transform);
             }
         }
     }

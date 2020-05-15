@@ -18,8 +18,6 @@ public class SaveLoad {
 
         Health health = player.GetComponentInChildren<Health>();
         PlayerPrefs.SetFloat("health.currentHealth", health.currentHealth);
-
-        Debug.Log("Saved");
     }   
      
     public void Load() {
@@ -39,7 +37,5 @@ public class SaveLoad {
 
         Health health = player.GetComponentInChildren<Health>();
         health.currentHealth = PlayerPrefs.GetFloat("health.currentHealth");
-
-        Debug.Log("Loaded");
     }
 }
