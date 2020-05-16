@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(PlayerInputHandler))]
 public class PlayerWeaponsManager : MonoBehaviour
@@ -13,8 +13,8 @@ public class PlayerWeaponsManager : MonoBehaviour
         PutUpNew,
     }
 
-    [Tooltip("List of weapon the player will start with")]
-    public List<WeaponController> startingWeapons = new List<WeaponController>();
+    // [Tooltip("List of weapon the player will start with")]
+    // public List<WeaponController> startingWeapons = new List<WeaponController>();
 
     [Header("References")]
     [Tooltip("Secondary camera used to avoid seeing weapon go throw geometries")]
@@ -79,6 +79,7 @@ public class PlayerWeaponsManager : MonoBehaviour
     WeaponSwitchState m_WeaponSwitchState;
     int m_WeaponSwitchNewWeaponIndex;
     bool isLoaded = false;
+    bool hasWeapons = false;
 
     private void Start()
     {
@@ -99,28 +100,36 @@ public class PlayerWeaponsManager : MonoBehaviour
     private void Update()
     {
         //Load stuff on first frame instead of Start() to ensure required components have been initialized
-        //Player's position can only be changed in FixedUpdate()
         if (!isLoaded) {
-            Debug.Log("Loading weapons now");
-
-            // Add starting weapons
-            foreach (var weapon in startingWeapons)
-            {
-                AddWeapon(weapon);
-            }
-
             // Load weapons once HUD is ready
             for (int i = 0; i < m_WeaponSlots.Length; i++)
             {
-                var weaponPrefabName = PlayerPrefs.GetString("m_WeaponSlots["+i+"]");
-                GameObject weaponPrefab = (GameObject) Resources.Load(weaponPrefabName);
+                if (PlayerPrefs.HasKey("m_WeaponSlots["+i+"]")) {
+                    var weaponName = PlayerPrefs.GetString("m_WeaponSlots["+i+"]");
+                    GameObject weaponPrefab = WeaponGenerator.getWeaponGameObject(weaponName);
+                    if (weaponPrefab) {
+                        WeaponController weaponController = 
+                            (WeaponController) weaponPrefab.GetComponentsInChildren(typeof(WeaponController))[0];
+                        AddWeapon(weaponController,weaponName);
+                    }
+                }
+            }
+
+            if (!hasWeapons) {
+                var weaponName = "milk";
+                GameObject weaponPrefab = WeaponGenerator.getWeaponGameObject(weaponName);
                 if (weaponPrefab) {
                     WeaponController weaponController = 
                         (WeaponController) weaponPrefab.GetComponentsInChildren(typeof(WeaponController))[0];
-                    AddWeapon(weaponController);
+                    AddWeapon(weaponController,weaponName);
                 }
             }
-            SwitchToWeaponIndex(PlayerPrefs.GetInt("activeWeaponIndex"));
+
+            if (PlayerPrefs.HasKey("activeWeaponIndex")) {
+                SwitchToWeaponIndex(PlayerPrefs.GetInt("activeWeaponIndex"));
+            } else {
+                SwitchWeapon(true);
+            }
 
             isLoaded = true;
         }
@@ -246,7 +255,7 @@ public class PlayerWeaponsManager : MonoBehaviour
                 PlayerPrefs.SetInt("activeWeaponIndex",activeWeaponIndex);
 
                 WeaponController newWeapon = GetWeaponAtSlotIndex(m_WeaponSwitchNewWeaponIndex);
-                Debug.Log("Switched to weapon: "+newWeapon.weaponName);
+                if (newWeapon) Debug.Log("Switched to weapon: "+newWeapon.weaponName);
                 if (onSwitchedToWeapon != null)
                 {
                     onSwitchedToWeapon.Invoke(newWeapon);
@@ -260,15 +269,16 @@ public class PlayerWeaponsManager : MonoBehaviour
         }
     }
 
-    public bool HasWeapon(WeaponController weaponPrefab)
+    public bool HasWeapon(string weaponName)
     {
+        Assert.IsNotNull(weaponName);
         // Checks if we already have a weapon coming from the specified prefab
         foreach(var w in m_WeaponSlots)
         {
             //compare weapon name instead of prefab (we'll have modded versions for each prefab)
-            if(w != null && w.weaponName == weaponPrefab.weaponName)
+            if(w != null && w.weaponName == weaponName)
             {
-                Debug.Log("We have '"+weaponPrefab.weaponName+"' already");
+                Debug.Log("We have '"+weaponName+"' already");
                 return true;
             }
         }
@@ -372,7 +382,7 @@ public class PlayerWeaponsManager : MonoBehaviour
 
                 // Activate new weapon
                 WeaponController newWeapon = GetWeaponAtSlotIndex(activeWeaponIndex);
-                Debug.Log("Switched to weapon: "+newWeapon.weaponName);
+                if (newWeapon) Debug.Log("Switched to weapon: "+newWeapon.weaponName);
                 if (onSwitchedToWeapon != null)
                 {
                     onSwitchedToWeapon.Invoke(newWeapon);
@@ -407,12 +417,11 @@ public class PlayerWeaponsManager : MonoBehaviour
     }
 
     // Adds a weapon to our inventory
-    public bool AddWeapon(WeaponController weaponPrefab)
+    public bool AddWeapon(WeaponController weaponPrefab, string weaponName)
     {
-        Debug.Log("Trying to add weapon "+weaponPrefab.weaponName);
+        if (weaponName == null) weaponName = weaponPrefab.weaponName;
 
-        // if we already hold this weapon type (a weapon coming from the same source prefab), don't add the weapon
-        if(HasWeapon(weaponPrefab))
+        if(HasWeapon(weaponName))
         {
             return false;
         }
@@ -425,6 +434,7 @@ public class PlayerWeaponsManager : MonoBehaviour
             {
                 // spawn the weapon prefab as child of the weapon socket
                 WeaponController weaponInstance = Instantiate(weaponPrefab, weaponParentSocket);
+                weaponInstance.weaponName = weaponName; //Name the instance, not the prefab!
                 weaponInstance.transform.localPosition = Vector3.zero;
                 weaponInstance.transform.localRotation = Quaternion.identity;
 
@@ -447,7 +457,9 @@ public class PlayerWeaponsManager : MonoBehaviour
                     onAddedWeapon.Invoke(weaponInstance, i);
                 }
 
-                PlayerPrefs.SetString("m_WeaponSlots["+i+"]", weaponPrefab.gameObject.name);
+                PlayerPrefs.SetString("m_WeaponSlots["+i+"]", weaponInstance.weaponName);
+                Debug.Log("Slot "+(i+1)+" = "+weaponInstance.weaponName);
+                hasWeapons = true;
 
                 return true;
             }

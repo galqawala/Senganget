@@ -39,18 +39,18 @@ public class InGameMenuManager : MonoBehaviour
 
         lookSensitivitySlider.value = m_PlayerInputsHandler.lookSensitivity;
         lookSensitivitySlider.onValueChanged.AddListener(OnMouseSensitivityChanged);
-        lookSensitivitySlider.value = PlayerPrefs.GetFloat("lookSensitivity");
+        if (PlayerPrefs.HasKey("lookSensitivity")) lookSensitivitySlider.value = PlayerPrefs.GetFloat("lookSensitivity");
 
         shadowsToggle.isOn = QualitySettings.shadows != ShadowQuality.Disable;
         shadowsToggle.onValueChanged.AddListener(OnShadowsChanged);
-        shadowsToggle.isOn = PlayerPrefs.GetInt("shadows")>0;
+        if (PlayerPrefs.HasKey("shadows")) shadowsToggle.isOn = PlayerPrefs.GetInt("shadows")>0;
 
         invincibilityToggle.isOn = m_PlayerHealth.invincible;
         invincibilityToggle.onValueChanged.AddListener(OnInvincibilityChanged);
 
         framerateToggle.isOn = m_FramerateCounter.uiText.gameObject.activeSelf;
         framerateToggle.onValueChanged.AddListener(OnFramerateCounterChanged);
-        framerateToggle.isOn = PlayerPrefs.GetInt("m_FramerateCounter")>0;
+        if (PlayerPrefs.HasKey("m_FramerateCounter")) framerateToggle.isOn = PlayerPrefs.GetInt("m_FramerateCounter")>0;
     }
 
     private void Update()

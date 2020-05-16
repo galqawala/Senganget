@@ -23,19 +23,23 @@ public class SaveLoad {
     public void Load() {
         GameObject player = GameObject.Find("Player");
 
-        player.transform.position = new Vector3(
-            PlayerPrefs.GetFloat("position.x")
-        ,   PlayerPrefs.GetFloat("position.y")
-        ,   PlayerPrefs.GetFloat("position.z")
-        );
+        if (PlayerPrefs.HasKey("position.x") && PlayerPrefs.HasKey("position.y") && PlayerPrefs.HasKey("position.z")) {
+            player.transform.position = new Vector3(
+                PlayerPrefs.GetFloat("position.x")
+            ,   PlayerPrefs.GetFloat("position.y")
+            ,   PlayerPrefs.GetFloat("position.z")
+            );
+        }
 
-        player.transform.eulerAngles = new Vector3(
-            PlayerPrefs.GetFloat("eulerAngles.x")
-        ,   PlayerPrefs.GetFloat("eulerAngles.y")
-        ,   PlayerPrefs.GetFloat("eulerAngles.z")
-        );
+        if (PlayerPrefs.HasKey("eulerAngles.x") && PlayerPrefs.HasKey("eulerAngles.y") && PlayerPrefs.HasKey("eulerAngles.z")) {
+            player.transform.eulerAngles = new Vector3(
+                PlayerPrefs.GetFloat("eulerAngles.x")
+            ,   PlayerPrefs.GetFloat("eulerAngles.y")
+            ,   PlayerPrefs.GetFloat("eulerAngles.z")
+            );
+        }
 
         Health health = player.GetComponentInChildren<Health>();
-        health.currentHealth = PlayerPrefs.GetFloat("health.currentHealth");
+        if (PlayerPrefs.HasKey("health.currentHealth")) health.currentHealth = PlayerPrefs.GetFloat("health.currentHealth");
     }
 }

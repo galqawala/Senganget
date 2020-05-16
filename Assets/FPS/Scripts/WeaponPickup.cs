@@ -22,14 +22,17 @@ public class WeaponPickup : MonoBehaviour
             if (t != transform)
                 t.gameObject.layer = 0;
         }
+
+        Debug.Log($"WeaponPickup Start() weaponName={weaponPrefab.weaponName}");
     }
 
     void OnPicked(PlayerCharacterController byPlayer)
     {
+        Debug.Log($"WeaponPickup OnPicked() weaponName={weaponPrefab.weaponName}");
         PlayerWeaponsManager playerWeaponsManager = byPlayer.GetComponent<PlayerWeaponsManager>();
         if (playerWeaponsManager)
         {
-            if (playerWeaponsManager.AddWeapon(weaponPrefab))
+            if (playerWeaponsManager.AddWeapon(weaponPrefab, weaponPrefab.weaponName))
             {
                 // Handle auto-switching to weapon if no weapons currently
                 if (playerWeaponsManager.GetActiveWeapon() == null)
