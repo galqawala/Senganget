@@ -1,14 +1,32 @@
 ﻿using UnityEngine;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 public class WeaponGenerator : MonoBehaviour
 {
     public static GameObject getWeaponGameObject(string name) {
         var weaponResourceNames = new string[] { "Weapon_Blaster","Weapon_Launcher","Weapon_Shotgun" };
-        var weaponResourceName = weaponResourceNames[randomIntBySeed(name,0,weaponResourceNames.Length-1)];
+        var weaponResourceName = weaponResourceNames[randomIntBySeed(name+"ResGO",0,weaponResourceNames.Length-1)];
         GameObject weaponPrefab = (GameObject) Resources.Load(weaponResourceName);
         return weaponPrefab;
+    }
+
+    public static void modWeapon(WeaponController weaponController, string name) {
+        weaponController.weaponName = name;
+        //Customize the visuals
+        var meshRenderers = weaponController.GetComponentsInChildren<MeshRenderer>();
+        foreach (var meshRenderer in meshRenderers) {
+            var materials = meshRenderer.materials;
+            foreach (var material in materials) {
+                var colorSeed = name+">"+meshRenderer.name+">"+material.name+">color";
+                //the numbered parts like Primary_Weapon_Front_Piece_01 & Primary_Weapon_Front_Piece_02 should get the same color
+                //also "WeaponPistol (Instance)" and "WeaponPistol (Instance) (Instance)" should get the same seed
+                colorSeed = Regex.Replace(colorSeed, @"([()\s\d]|Instance)+", string.Empty);
+                Debug.Log(colorSeed);
+                material.color = randomColor(colorSeed);
+            }
+        }
     }
 
     private static float randomBySeed(byte[] seed) // random seeded float between 0 and 1
@@ -26,6 +44,14 @@ public class WeaponGenerator : MonoBehaviour
     private static float randomBySeed(string seed)
     {
         return randomBySeed(Encoding.ASCII.GetBytes(seed));
+    }
+
+    private static Color randomColor(string seed)
+    {
+        var red   = randomBySeed(seed+"red");
+        var green = randomBySeed(seed+"green");
+        var blue  = randomBySeed(seed+"blue");
+        return new Color(red, green, blue);
     }
 
     private static int randomIntBySeed(string seed, int min, int max)

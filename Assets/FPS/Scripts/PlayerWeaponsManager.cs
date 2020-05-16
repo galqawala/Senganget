@@ -109,7 +109,7 @@ public class PlayerWeaponsManager : MonoBehaviour
                     GameObject weaponPrefab = WeaponGenerator.getWeaponGameObject(weaponName);
                     if (weaponPrefab) {
                         WeaponController weaponController = 
-                            (WeaponController) weaponPrefab.GetComponentsInChildren(typeof(WeaponController))[0];
+                            (WeaponController) weaponPrefab.GetComponentInChildren(typeof(WeaponController));
                         AddWeapon(weaponController,weaponName);
                     }
                 }
@@ -120,7 +120,7 @@ public class PlayerWeaponsManager : MonoBehaviour
                 GameObject weaponPrefab = WeaponGenerator.getWeaponGameObject(weaponName);
                 if (weaponPrefab) {
                     WeaponController weaponController = 
-                        (WeaponController) weaponPrefab.GetComponentsInChildren(typeof(WeaponController))[0];
+                        (WeaponController) weaponPrefab.GetComponentInChildren(typeof(WeaponController));
                     AddWeapon(weaponController,weaponName);
                 }
             }
@@ -434,7 +434,8 @@ public class PlayerWeaponsManager : MonoBehaviour
             {
                 // spawn the weapon prefab as child of the weapon socket
                 WeaponController weaponInstance = Instantiate(weaponPrefab, weaponParentSocket);
-                weaponInstance.weaponName = weaponName; //Name the instance, not the prefab!
+                WeaponGenerator.modWeapon(weaponInstance, weaponName);
+                // weaponInstance.weaponName = weaponName; //Name the instance, not the prefab!
                 weaponInstance.transform.localPosition = Vector3.zero;
                 weaponInstance.transform.localRotation = Quaternion.identity;
 

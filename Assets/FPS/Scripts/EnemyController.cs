@@ -359,6 +359,7 @@ public class EnemyController : MonoBehaviour
 
         // drop unique loot with unpacked&modded prefabs
         var rnd = Random.value;
+        Debug.Log($"Loot rnd={rnd}");
         if (rnd < 0.15) { //15% health
             Debug.Log("Dropping health");
             var pickupObject = Resources.Load("Loot_Health");
@@ -372,7 +373,8 @@ public class EnemyController : MonoBehaviour
             var weaponObject = WeaponGenerator.getWeaponGameObject(weaponName);
             var weaponInstance = Instantiate(weaponObject, transform.position, Quaternion.identity, pickupMesh);
             WeaponController weaponController = weaponInstance.GetComponentInChildren(typeof(WeaponController)) as WeaponController;
-            weaponController.weaponName = weaponName; //Name the instance, not the prefab!
+            WeaponGenerator.modWeapon(weaponController, weaponName);
+            // weaponController.weaponName = weaponName; //Name the instance, not the prefab!
             WeaponPickup weaponPickupComponent = pickupInstance.AddComponent(typeof(WeaponPickup)) as WeaponPickup;
             weaponPickupComponent.weaponPrefab = weaponController;
         }   //70% nothing
