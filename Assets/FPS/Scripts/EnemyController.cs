@@ -354,7 +354,7 @@ public class EnemyController : MonoBehaviour
         var vfx = Instantiate(deathVFX, deathVFXSpawnPoint.position, Quaternion.identity);
         Destroy(vfx, 5f);
 
-        // tells the game flow manager to handle the enemy destuction
+        // tells the game flow manager to handle the enemy destruction
         m_EnemyManager.UnregisterEnemy(this);
 
         // drop unique loot with unpacked&modded prefabs
@@ -365,18 +365,18 @@ public class EnemyController : MonoBehaviour
             var pickupObject = Resources.Load("Loot_Health");
             Instantiate(pickupObject, transform.position, Quaternion.identity);
         } else if (rnd < 0.3) { //15% weapons
-            var weaponName = FirstLetterToUpper(Trigrams.randomText(5));
-            Debug.Log("Dropping a weapon: "+weaponName);
-            var pickupObject = Resources.Load("Pickup_Weapon"); //generic pickup object
-            var pickupInstance = (GameObject) Instantiate(pickupObject, transform.position, Quaternion.identity);
-            var pickupMesh = pickupInstance.transform.Find("Mesh");
-            var weaponObject = WeaponGenerator.getWeaponGameObject(weaponName);
-            var weaponInstance = Instantiate(weaponObject, transform.position, Quaternion.identity, pickupMesh);
-            WeaponController weaponController = weaponInstance.GetComponentInChildren(typeof(WeaponController)) as WeaponController;
-            WeaponGenerator.modWeapon(weaponController, weaponName);
-            // weaponController.weaponName = weaponName; //Name the instance, not the prefab!
-            WeaponPickup weaponPickupComponent = pickupInstance.AddComponent(typeof(WeaponPickup)) as WeaponPickup;
-            weaponPickupComponent.weaponPrefab = weaponController;
+            WeaponGenerator.dropWeapon(transform.position);
+            // var weaponName = FirstLetterToUpper(Trigrams.randomText(5));
+            // Debug.Log("Dropping a weapon: "+weaponName);
+            // var pickupObject = Resources.Load("Pickup_Weapon"); //generic pickup object
+            // var pickupInstance = (GameObject) Instantiate(pickupObject, transform.position, Quaternion.identity);
+            // var pickupMesh = pickupInstance.transform.Find("Mesh");
+            // var weaponObject = WeaponGenerator.getWeaponGameObject(weaponName);
+            // var weaponInstance = Instantiate(weaponObject, transform.position, Quaternion.identity, pickupMesh);
+            // WeaponController weaponController = weaponInstance.GetComponentInChildren(typeof(WeaponController)) as WeaponController;
+            // WeaponGenerator.modWeapon(weaponController, weaponName);
+            // WeaponPickup weaponPickupComponent = pickupInstance.AddComponent(typeof(WeaponPickup)) as WeaponPickup;
+            // weaponPickupComponent.weaponPrefab = weaponController;
         }   //70% nothing
 
         // this will call the OnDestroy function
@@ -489,17 +489,5 @@ public class EnemyController : MonoBehaviour
         {
             m_LastTimeWeaponSwapped = Mathf.NegativeInfinity;
         }
-    }
-
-    public string FirstLetterToUpper(string str)
-    {
-        // https://stackoverflow.com/questions/4135317/make-first-letter-of-a-string-upper-case-with-maximum-performance
-        if (str == null)
-            return null;
-
-        if (str.Length > 1)
-            return char.ToUpper(str[0]) + str.Substring(1);
-
-        return str.ToUpper();
     }
 }

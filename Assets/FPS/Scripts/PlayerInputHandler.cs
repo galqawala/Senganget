@@ -143,6 +143,16 @@ public class PlayerInputHandler : MonoBehaviour
         return false;
     }
 
+    public bool GetDropWeaponInputDown()
+    {
+        if (CanProcessInput())
+        {
+            return Input.GetButtonDown(GameConstants.k_ButtonNameDropWeapon);
+        }
+
+        return false;
+    }
+
     public bool GetCrouchInputReleased()
     {
         if (CanProcessInput())

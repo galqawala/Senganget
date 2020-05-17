@@ -11,4 +11,16 @@ static class Utilities
             GetAllChildren(t, ref transforms);
         }
     }
+
+    public static string FirstLetterToUpper(string str)
+    {
+        // https://stackoverflow.com/questions/4135317/make-first-letter-of-a-string-upper-case-with-maximum-performance
+        if (str == null)
+            return null;
+
+        if (str.Length > 1)
+            return char.ToUpper(str[0]) + str.Substring(1);
+
+        return str.ToUpper();
+    }
 }

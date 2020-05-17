@@ -80,6 +80,8 @@ public class PlayerWeaponsManager : MonoBehaviour
     int m_WeaponSwitchNewWeaponIndex;
     bool isLoaded = false;
     bool hasWeapons = false;
+    Vector3 weaponDropPosition;
+    bool canPickWeapons = true;
 
     private void Start()
     {
@@ -104,8 +106,8 @@ public class PlayerWeaponsManager : MonoBehaviour
             // Load weapons once HUD is ready
             for (int i = 0; i < m_WeaponSlots.Length; i++)
             {
-                if (PlayerPrefs.HasKey("m_WeaponSlots["+i+"]")) {
-                    var weaponName = PlayerPrefs.GetString("m_WeaponSlots["+i+"]");
+                if (PlayerPrefs.HasKey($"m_WeaponSlots[{i}]")) {
+                    var weaponName = PlayerPrefs.GetString($"m_WeaponSlots[{i}]");
                     GameObject weaponPrefab = WeaponGenerator.getWeaponGameObject(weaponName);
                     if (weaponPrefab) {
                         WeaponController weaponController = 
@@ -189,6 +191,22 @@ public class PlayerWeaponsManager : MonoBehaviour
                     isPointingAtEnemy = true;
                 }
             }
+        }
+
+        WeaponDropper();
+    }
+
+    private void WeaponDropper() {
+        if (m_InputHandler.GetDropWeaponInputDown() && isLoaded) {
+            Debug.Log($"Dropping active weapon");
+            WeaponController activeWeapon = GetActiveWeapon();
+            if(activeWeapon != null) {
+                canPickWeapons = false;
+                RemoveWeapon(activeWeapon);
+                WeaponGenerator.dropWeapon(activeWeapon.weaponName, transform.position);
+            }
+        } else if (!canPickWeapons && Vector3.Distance(transform.position, weaponDropPosition) > 1f) {
+            canPickWeapons = true;
         }
     }
 
@@ -421,7 +439,7 @@ public class PlayerWeaponsManager : MonoBehaviour
     {
         if (weaponName == null) weaponName = weaponPrefab.weaponName;
 
-        if(HasWeapon(weaponName))
+        if(HasWeapon(weaponName) || !canPickWeapons)
         {
             return false;
         }
@@ -458,7 +476,7 @@ public class PlayerWeaponsManager : MonoBehaviour
                     onAddedWeapon.Invoke(weaponInstance, i);
                 }
 
-                PlayerPrefs.SetString("m_WeaponSlots["+i+"]", weaponInstance.weaponName);
+                PlayerPrefs.SetString($"m_WeaponSlots[{i}]", weaponInstance.weaponName);
                 //Debug.Log("Slot "+(i+1)+" = "+weaponInstance.weaponName);
                 hasWeapons = true;
 
@@ -484,6 +502,7 @@ public class PlayerWeaponsManager : MonoBehaviour
             if(m_WeaponSlots[i] == weaponInstance)
             {
                 m_WeaponSlots[i] = null;
+                PlayerPrefs.DeleteKey($"m_WeaponSlots[{i}]");
 
                 if (onRemovedWeapon != null)
                 {

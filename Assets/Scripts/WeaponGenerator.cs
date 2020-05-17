@@ -28,6 +28,24 @@ public class WeaponGenerator : MonoBehaviour
         }
     }
 
+    public static void dropWeapon(string weaponName, Vector3 position) {
+        Debug.Log("Dropping a weapon: "+weaponName);
+        var pickupObject = Resources.Load("Pickup_Weapon"); //generic pickup object
+        var pickupInstance = (GameObject) Instantiate(pickupObject, position, Quaternion.identity);
+        var pickupMesh = pickupInstance.transform.Find("Mesh");
+        var weaponObject = WeaponGenerator.getWeaponGameObject(weaponName);
+        var weaponInstance = Instantiate(weaponObject, position, Quaternion.identity, pickupMesh);
+        WeaponController weaponController = weaponInstance.GetComponentInChildren(typeof(WeaponController)) as WeaponController;
+        WeaponGenerator.modWeapon(weaponController, weaponName);
+        WeaponPickup weaponPickupComponent = pickupInstance.AddComponent(typeof(WeaponPickup)) as WeaponPickup;
+        weaponPickupComponent.weaponPrefab = weaponController;
+    }
+
+    public static void dropWeapon(Vector3 position) {
+        var weaponName = Utilities.FirstLetterToUpper(Trigrams.randomText(5));
+        dropWeapon(weaponName, position);
+    }
+
     private static float randomBySeed(byte[] seed) // random seeded float between 0 and 1
     {
         SHA256CryptoServiceProvider sha256 = new SHA256CryptoServiceProvider();

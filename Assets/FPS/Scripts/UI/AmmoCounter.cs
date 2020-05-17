@@ -39,6 +39,8 @@ public class AmmoCounter : MonoBehaviour
     public void Initialize(WeaponController weapon, int weaponIndex)
     {
         //Parent prefab is being instantiated
+        gameObject.name = $"AmmoCounter{(weaponIndex+1)}";
+        transform.SetSiblingIndex(weaponIndex);
         m_Weapon = weapon;
         weaponCounterIndex = weaponIndex;
 
