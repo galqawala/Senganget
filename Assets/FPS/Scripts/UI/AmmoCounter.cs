@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(FillBarColorChange))]
@@ -33,13 +34,17 @@ public class AmmoCounter : MonoBehaviour
     public int weaponCounterIndex { get; set; }
 
     PlayerWeaponsManager m_PlayerWeaponsManager;
-    WeaponController m_Weapon;
+    public WeaponController m_Weapon;
 
     public void Initialize(WeaponController weapon, int weaponIndex)
     {
+        //Parent prefab is being instantiated
         m_Weapon = weapon;
         weaponCounterIndex = weaponIndex;
-        weaponImage.sprite = weapon.weaponIcon;
+
+        weaponImage.sprite = weapon.weaponIcon; //original icon
+        WeaponIconUpdater weaponIconUpdater = FindObjectOfType<WeaponIconUpdater>();
+        weaponImage.sprite = weaponIconUpdater.GetIcon(weapon); //dynamic icon
 
         m_PlayerWeaponsManager = FindObjectOfType<PlayerWeaponsManager>();
         DebugUtility.HandleErrorIfNullFindObject<PlayerWeaponsManager, AmmoCounter>(m_PlayerWeaponsManager, this);

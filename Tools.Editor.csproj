@@ -2,6 +2,8 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
+    <CscToolPath>/home/hatsca/Unity/Hub/Editor/2019.3.7f1/Editor/Data/Tools/RoslynScripts</CscToolPath>
+    <CscToolExe>unity_csc.sh</CscToolExe>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +11,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{5f532e54-df0c-5202-fea3-50a9c72efdcd}</ProjectGuid>
+    <ProjectGuid>{542E535F-0CDF-0252-FEA3-50A9C72EFDCD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Tools.Editor</AssemblyName>
@@ -44,6 +46,14 @@
     <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>/home/hatsca/Unity/Hub/Editor/2019.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>/home/hatsca/Unity/Hub/Editor/2019.3.7f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\MapMagic\Tools\Editor\AssemblePlugins.cs" />
      <Compile Include="Assets\MapMagic\Tools\Editor\ChartWindow.cs" />
@@ -92,8 +102,17 @@
      <None Include="Assets\MapMagic\Tools\SceneEdit\Editor\PolyLine.shader" />
      <None Include="Assets\MapMagic\Tools\SceneEdit\Editor\PolyLineBillboards.shader" />
      <None Include="Assets\MapMagic\Tools\GUI\Editor\Shaders\TextureScrollZoom.shader" />
- <Reference Include="UnityEngine">
- <HintPath>/home/hatsca/Unity/Hub/Editor/2019.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
+ <Reference Include="UnityEditor.UI">
+ <HintPath>/home/hatsca/unityProjects/Senganget/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/home/hatsca/unityProjects/Senganget/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.TestRunner">
+ <HintPath>/home/hatsca/unityProjects/Senganget/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.TestRunner">
+ <HintPath>/home/hatsca/unityProjects/Senganget/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>/home/hatsca/Unity/Hub/Editor/2019.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -271,9 +290,6 @@
  </Reference>
  <Reference Include="UnityEngine.XRModule">
  <HintPath>/home/hatsca/Unity/Hub/Editor/2019.3.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor">
- <HintPath>/home/hatsca/Unity/Hub/Editor/2019.3.7f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.VR">
  <HintPath>/home/hatsca/Unity/Hub/Editor/2019.3.7f1/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
@@ -668,28 +684,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Tools.csproj">
-      <Project>{05d49518-e580-3bc9-d5fc-7f2ff4567d05}</Project>
+      <Project>{1895D405-80E5-C93B-D5FC-7F2FF4567D05}</Project>
       <Name>Tools</Name>
-    </ProjectReference>
-    <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{dc33f3cb-f981-3f0e-4242-2af98009cb17}</Project>
-      <Name>UnityEditor.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{19974a3b-44b2-701c-4c93-d0c6e2a943a2}</Project>
-      <Name>UnityEngine.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="UnityEditor.TestRunner.csproj">
-      <Project>{582de93d-b337-eb4e-3b9a-4dcf92fa8e23}</Project>
-      <Name>UnityEditor.TestRunner</Name>
-    </ProjectReference>
-    <ProjectReference Include="UnityEngine.TestRunner.csproj">
-      <Project>{d79ce6f5-af9a-7716-6faf-481a64f933dd}</Project>
-      <Name>UnityEngine.TestRunner</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

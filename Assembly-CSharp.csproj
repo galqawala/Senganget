@@ -128,10 +128,14 @@
      <Compile Include="Assets\MapMagic\Compatibility\Runtime\CTSOutput.cs" />
      <Compile Include="Assets\MapMagic\Compatibility\Runtime\MegaSplatOutput.cs" />
      <Compile Include="Assets\MapMagic\Compatibility\Runtime\MicroSplatOutput.cs" />
+     <Compile Include="Assets\Scripts\BoundsExtension.cs" />
      <Compile Include="Assets\Scripts\LocalNavMeshBuilder.cs" />
      <Compile Include="Assets\Scripts\NavMeshSourceTag.cs" />
      <Compile Include="Assets\Scripts\Trigrams.cs" />
+     <Compile Include="Assets\Scripts\Utilities.cs" />
+     <Compile Include="Assets\Scripts\VisualizeBounds.cs" />
      <Compile Include="Assets\Scripts\WeaponGenerator.cs" />
+     <Compile Include="Assets\Scripts\WeaponIconUpdater.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne_License.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />

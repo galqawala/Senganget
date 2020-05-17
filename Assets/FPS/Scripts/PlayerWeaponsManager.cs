@@ -255,7 +255,7 @@ public class PlayerWeaponsManager : MonoBehaviour
                 PlayerPrefs.SetInt("activeWeaponIndex",activeWeaponIndex);
 
                 WeaponController newWeapon = GetWeaponAtSlotIndex(m_WeaponSwitchNewWeaponIndex);
-                if (newWeapon) Debug.Log("Switched to weapon: "+newWeapon.weaponName);
+                if (newWeapon) //Debug.Log("Switched to weapon: "+newWeapon.weaponName);
                 if (onSwitchedToWeapon != null)
                 {
                     onSwitchedToWeapon.Invoke(newWeapon);
@@ -278,7 +278,7 @@ public class PlayerWeaponsManager : MonoBehaviour
             //compare weapon name instead of prefab (we'll have modded versions for each prefab)
             if(w != null && w.weaponName == weaponName)
             {
-                Debug.Log("We have '"+weaponName+"' already");
+                //Debug.Log("We have '"+weaponName+"' already");
                 return true;
             }
         }
@@ -382,7 +382,7 @@ public class PlayerWeaponsManager : MonoBehaviour
 
                 // Activate new weapon
                 WeaponController newWeapon = GetWeaponAtSlotIndex(activeWeaponIndex);
-                if (newWeapon) Debug.Log("Switched to weapon: "+newWeapon.weaponName);
+                if (newWeapon) //Debug.Log("Switched to weapon: "+newWeapon.weaponName);
                 if (onSwitchedToWeapon != null)
                 {
                     onSwitchedToWeapon.Invoke(newWeapon);
@@ -459,7 +459,7 @@ public class PlayerWeaponsManager : MonoBehaviour
                 }
 
                 PlayerPrefs.SetString("m_WeaponSlots["+i+"]", weaponInstance.weaponName);
-                Debug.Log("Slot "+(i+1)+" = "+weaponInstance.weaponName);
+                //Debug.Log("Slot "+(i+1)+" = "+weaponInstance.weaponName);
                 hasWeapons = true;
 
                 return true;

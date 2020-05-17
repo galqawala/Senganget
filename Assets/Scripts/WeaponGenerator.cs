@@ -23,7 +23,6 @@ public class WeaponGenerator : MonoBehaviour
                 //the numbered parts like Primary_Weapon_Front_Piece_01 & Primary_Weapon_Front_Piece_02 should get the same color
                 //also "WeaponPistol (Instance)" and "WeaponPistol (Instance) (Instance)" should get the same seed
                 colorSeed = Regex.Replace(colorSeed, @"([()\s\d]|Instance)+", string.Empty);
-                Debug.Log(colorSeed);
                 material.color = randomColor(colorSeed);
             }
         }
