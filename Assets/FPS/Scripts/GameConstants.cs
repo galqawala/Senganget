@@ -13,6 +13,7 @@
     public const string k_ButtonNameSprint                  = "Sprint";
     public const string k_ButtonNameCrouch                  = "Crouch";
     public const string k_ButtonNameDropWeapon              = "Drop Weapon";
+    public const string k_ButtonNameInventory               = "Inventory";
     public const string k_ButtonNameAim                     = "Aim";
     public const string k_ButtonNameGamepadAim              = "Gamepad Aim";
     public const string k_ButtonNameSwitchWeapon            = "Mouse ScrollWheel";

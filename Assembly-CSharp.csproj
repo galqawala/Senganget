@@ -130,6 +130,7 @@
      <Compile Include="Assets\MapMagic\Compatibility\Runtime\MegaSplatOutput.cs" />
      <Compile Include="Assets\MapMagic\Compatibility\Runtime\MicroSplatOutput.cs" />
      <Compile Include="Assets\Scripts\BoundsExtension.cs" />
+     <Compile Include="Assets\Scripts\Inventory.cs" />
      <Compile Include="Assets\Scripts\LocalNavMeshBuilder.cs" />
      <Compile Include="Assets\Scripts\NavMeshSourceTag.cs" />
      <Compile Include="Assets\Scripts\Trigrams.cs" />

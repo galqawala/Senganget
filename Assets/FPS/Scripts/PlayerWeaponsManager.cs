@@ -47,13 +47,13 @@ public class PlayerWeaponsManager : MonoBehaviour
     public float recoilRestitutionSharpness = 10f;
 
     [Header("Misc")]
-    [Tooltip("Speed at which the aiming animatoin is played")]
+    [Tooltip("Speed at which the aiming animation is played")]
     public float aimingAnimationSpeed = 10f;
     [Tooltip("Field of view when not aiming")]
     public float defaultFOV = 60f;
     [Tooltip("Portion of the regular FOV to apply to the weapon camera")]
     public float weaponFOVMultiplier = 1f;
-    [Tooltip("Delay before switching weapon a second time, to avoid recieving multiple inputs from mouse wheel")]
+    [Tooltip("Delay before switching weapon a second time, to avoid receiving multiple inputs from mouse wheel")]
     public float weaponSwitchDelay = 1f;
     [Tooltip("Layer to set FPS weapon gameObjects to")]
     public LayerMask FPSWeaponLayer;
@@ -66,7 +66,7 @@ public class PlayerWeaponsManager : MonoBehaviour
     public UnityAction<WeaponController, int> onAddedWeapon;
     public UnityAction<WeaponController, int> onRemovedWeapon;
 
-    WeaponController[] m_WeaponSlots = new WeaponController[9]; // 9 available weapon slots
+    public WeaponController[] m_WeaponSlots = new WeaponController[9]; // 9 available weapon slots
     PlayerInputHandler m_InputHandler;
     PlayerCharacterController m_PlayerCharacterController;
     float m_WeaponBobFactor;

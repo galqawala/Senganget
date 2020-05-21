@@ -152,6 +152,15 @@ public class PlayerInputHandler : MonoBehaviour
 
         return false;
     }
+    public bool GetInventoryInputDown()
+    {
+        if (CanProcessInput())
+        {
+            return Input.GetButtonDown(GameConstants.k_ButtonNameInventory);
+        }
+
+        return false;
+    }
 
     public bool GetCrouchInputReleased()
     {
