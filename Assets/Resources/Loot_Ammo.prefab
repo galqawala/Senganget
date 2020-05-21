@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoType: 0
+  numberOfAmmo: 2
 --- !u!1 &7062793244340496805
 GameObject:
   m_ObjectHideFlags: 0

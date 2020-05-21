@@ -4,7 +4,8 @@ public class AmmoPickup : MonoBehaviour
 {
     [Header("Parameters")]
     [Tooltip("Type of ammo to pickup")]
-    public int ammoType;
+    public int ammoType = 0;
+    public int numberOfAmmo = 2;
 
     Pickup m_Pickup;
 
@@ -19,7 +20,7 @@ public class AmmoPickup : MonoBehaviour
 
     void OnPicked(PlayerCharacterController player)
     {
-        var ammoCount = PlayerPrefs.GetInt("ammo"+ammoType)+1;
+        var ammoCount = PlayerPrefs.GetInt("ammo"+ammoType)+numberOfAmmo;
         PlayerPrefs.SetInt("ammo"+ammoType, ammoCount);
         Debug.Log($"You now have {ammoCount} of ammo {ammoType}");
         Destroy(gameObject);

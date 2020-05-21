@@ -13,6 +13,8 @@ public class WeaponGenerator : MonoBehaviour
     }
 
     public static void modWeapon(WeaponController weaponController, string name) {
+        //TODO: drop more ammo, mod delayBetweenShots
+
         weaponController.weaponName = name;
         weaponController.ammoType = randomIntBySeed(name+"ammoType",-1,0);
         //Customize the visuals
