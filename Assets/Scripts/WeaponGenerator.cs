@@ -13,10 +13,9 @@ public class WeaponGenerator : MonoBehaviour
     }
 
     public static void modWeapon(WeaponController weaponController, string name) {
-        //TODO: drop more ammo, mod delayBetweenShots
-
         weaponController.weaponName = name;
         weaponController.ammoType = randomIntBySeed(name+"ammoType",-1,0);
+        weaponController.delayBetweenShots = randomBetween(name+"delayBetweenShots", 0.01f, 7f);
         //Customize the visuals
         var meshRenderers = weaponController.GetComponentsInChildren<MeshRenderer>();
         foreach (var meshRenderer in meshRenderers) {
@@ -80,6 +79,14 @@ public class WeaponGenerator : MonoBehaviour
         float span = max-min+1; //0..2 = 3 options
         //clamp just in case rnd=1
         return Mathf.Clamp(Mathf.FloorToInt(min+(rnd*span)), min, max);
+    }
+
+    private static float randomBetween(string seed, float min, float max)
+    {
+        float rnd = randomBySeed(Encoding.ASCII.GetBytes(seed));
+        float final = min+(rnd*(max-min));
+        assertValueBetween(final, min, max);
+        return final;
     }
 
     private static void assertValueBetween(float value, float min, float max) {
