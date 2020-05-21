@@ -80,7 +80,6 @@ public class PlayerWeaponsManager : MonoBehaviour
     int m_WeaponSwitchNewWeaponIndex;
     bool isLoaded = false;
     bool hasWeapons = false;
-    Vector3 weaponDropPosition;
     bool canPickWeapons = true;
 
     private void Start()
@@ -201,15 +200,20 @@ public class PlayerWeaponsManager : MonoBehaviour
             Debug.Log($"Dropping active weapon");
             WeaponController activeWeapon = GetActiveWeapon();
             if(activeWeapon != null) {
+                /*
+                    Don't allow picking it back immediately. 
+                    Once it's been created and we've ignored the pickup event, we can safely allow pickups again.
+                    Pickup won't be triggered once we allow pickups, but when player exits&returns.
+                */
                 canPickWeapons = false;
                 RemoveWeapon(activeWeapon);
                 WeaponGenerator.dropWeapon(activeWeapon.weaponName, transform.position);
             }
-        } else if (!canPickWeapons && Vector3.Distance(transform.position, weaponDropPosition) > 1f) {
+        } else if (!canPickWeapons) {
+            //See comment above, should be safe to allow pickups now
             canPickWeapons = true;
         }
     }
-
 
     // Update various animated features in LateUpdate because it needs to override the animated arm position
     private void LateUpdate()

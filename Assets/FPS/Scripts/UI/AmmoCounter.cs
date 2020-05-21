@@ -15,6 +15,8 @@ public class AmmoCounter : MonoBehaviour
     public Image ammoFillImage;
     [Tooltip("Text for image index")]
     public TMPro.TextMeshProUGUI weaponIndexText;
+    [Tooltip("Text for the number of ammunition left")]
+    public TMPro.TextMeshProUGUI ammoCountText;
 
     [Header("Selection")]
     [Range(0, 1)]
@@ -68,5 +70,11 @@ public class AmmoCounter : MonoBehaviour
         controlKeysRoot.SetActive(!isActiveWeapon);
 
         FillBarColorChange.UpdateVisual(currenFillRatio);
+
+        if (m_Weapon.ammoType >= 0) {
+            ammoCountText.text = PlayerPrefs.GetInt("ammo"+m_Weapon.ammoType).ToString();
+        } else {
+            ammoCountText.text = "∞".ToString();
+        }
     }
 }

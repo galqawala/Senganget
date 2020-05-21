@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour
     public float flashOnHitDuration = 0.5f;
 
     [Header("Sounds")]
-    [Tooltip("Sound played when recieving damages")]
+    [Tooltip("Sound played when receiving damages")]
     public AudioClip damageTick;
 
     [Header("VFX")]
@@ -366,17 +366,9 @@ public class EnemyController : MonoBehaviour
             Instantiate(pickupObject, transform.position, Quaternion.identity);
         } else if (rnd < 0.3) { //15% weapons
             WeaponGenerator.dropWeapon(transform.position);
-            // var weaponName = FirstLetterToUpper(Trigrams.randomText(5));
-            // Debug.Log("Dropping a weapon: "+weaponName);
-            // var pickupObject = Resources.Load("Pickup_Weapon"); //generic pickup object
-            // var pickupInstance = (GameObject) Instantiate(pickupObject, transform.position, Quaternion.identity);
-            // var pickupMesh = pickupInstance.transform.Find("Mesh");
-            // var weaponObject = WeaponGenerator.getWeaponGameObject(weaponName);
-            // var weaponInstance = Instantiate(weaponObject, transform.position, Quaternion.identity, pickupMesh);
-            // WeaponController weaponController = weaponInstance.GetComponentInChildren(typeof(WeaponController)) as WeaponController;
-            // WeaponGenerator.modWeapon(weaponController, weaponName);
-            // WeaponPickup weaponPickupComponent = pickupInstance.AddComponent(typeof(WeaponPickup)) as WeaponPickup;
-            // weaponPickupComponent.weaponPrefab = weaponController;
+        } else if (rnd < 0.45) { //15% ammo
+            var pickupObject = Resources.Load("Loot_Ammo");
+            Instantiate(pickupObject, transform.position, Quaternion.identity);
         }   //70% nothing
 
         // this will call the OnDestroy function

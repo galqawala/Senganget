@@ -14,6 +14,7 @@ public class WeaponGenerator : MonoBehaviour
 
     public static void modWeapon(WeaponController weaponController, string name) {
         weaponController.weaponName = name;
+        weaponController.ammoType = randomIntBySeed(name+"ammoType",-1,0);
         //Customize the visuals
         var meshRenderers = weaponController.GetComponentsInChildren<MeshRenderer>();
         foreach (var meshRenderer in meshRenderers) {
@@ -74,7 +75,7 @@ public class WeaponGenerator : MonoBehaviour
     private static int randomIntBySeed(string seed, int min, int max)
     {
         float rnd = randomBySeed(Encoding.ASCII.GetBytes(seed));
-        float span = max-min+1; //0..2 --> 3 options
+        float span = max-min+1; //0..2 = 3 options
         //clamp just in case rnd=1
         return Mathf.Clamp(Mathf.FloorToInt(min+(rnd*span)), min, max);
     }

@@ -66,6 +66,8 @@ public class WeaponController : MonoBehaviour
     public float ammoReloadDelay = 2f;
     [Tooltip("Maximum amount of ammo in the gun")]
     public float maxAmmo = 8;
+    [Tooltip("Type of ammo required (-1 = none/infinite)")]
+    public int ammoType = -1;
 
     [Header("Charging parameters (charging weapons only)")]
     [Tooltip("Trigger a shot when maximum charge is reached")]
@@ -249,11 +251,15 @@ public class WeaponController : MonoBehaviour
 
     bool TryShoot()
     {
+        var ammoCount = (ammoType >= 0) ? PlayerPrefs.GetInt("ammo"+ammoType) : int.MaxValue;
+
         if (m_CurrentAmmo >= 1f 
-            && m_LastTimeShot + delayBetweenShots < Time.time)
+            && m_LastTimeShot + delayBetweenShots < Time.time
+            && ammoCount >= 1)
         {
             HandleShoot();
             m_CurrentAmmo -= 1;
+            if (ammoType >= 0) PlayerPrefs.SetInt("ammo"+ammoType, ammoCount-1);
 
             return true;
         }
